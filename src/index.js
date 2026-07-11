@@ -9,6 +9,9 @@ app.use(express.json());
 app.use('/traces', ingestRouter);
 app.get('/health', (req, res) => res.json({ status: 'ok' }));
 
+const queryRouter = require('./routes/query');
+app.use('/traces', queryRouter);
+
 const PORT = process.env.PORT || 4000;
 
 connectDB().then(() => {
