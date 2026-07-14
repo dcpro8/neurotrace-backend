@@ -7,6 +7,8 @@ const ingestRouter = require('./routes/ingest');
 const queryRouter = require('./routes/query');
 const askRouter = require('./routes/ask');
 const startWorker = require('./worker');
+const statsRouter = require('./routes/stats');
+const tracesListRouter = require('./routes/traces');
 const { askLimiter } = require('./middleware/rateLimiter');
 
 const app = express();
@@ -22,8 +24,8 @@ app.use('/traces', ingestRouter);
 app.use('/traces', queryRouter);
 app.use('/traces', askRouter);
 
-const statsRouter = require('./routes/stats');
 app.use('/traces', statsRouter);
+app.use('/traces/all', tracesListRouter);
 
 app.get('/health', (req, res) => res.json({ status: 'ok' }));
 

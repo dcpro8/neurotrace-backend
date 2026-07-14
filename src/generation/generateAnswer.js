@@ -8,7 +8,7 @@ async function generateAnswer(question, chunks) {
 
     const prompt = `You are an assistant that explains AI agent behavior based only on the trace data below. Answer the question using only this context. If the context doesn't contain a clear answer, say so plainly.
 
-Write your answer as natural prose. When you reference specific evidence, cite it inline using only the format [steps X-Y] — for example "the agent failed due to a timeout [steps 14-17]". Never mention "chunk", "chunk number", or the context format itself in your answer.
+Write 2-3 natural sentences. Cite evidence inline using [steps X-Y] at most once or twice total — do not repeat the same citation multiple times in one answer. Never mention "chunk" or the context format itself.
 
 Context:
 ${context}

@@ -28,6 +28,8 @@ function startWorker() {
     await TraceStep.insertMany(stepDocs);
     console.log(`Processed trace ${trace._id} (${stepDocs.length} steps)`);
 
+    await Trace.findByIdAndUpdate(trace._id, { stepCount: stepDocs.length });
+
     const chunks = chunkSteps(stepDocs);
     for (const chunk of chunks) {
       const embedding = await generateEmbedding(chunk.text);
