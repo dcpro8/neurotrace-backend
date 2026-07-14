@@ -1,19 +1,28 @@
 require('dotenv').config({ quiet: true });
 const express = require('express');
+const cors = require('cors');
+const helmet = require('helmet');
 const connectDB = require('./db');
 const ingestRouter = require('./routes/ingest');
+const queryRouter = require('./routes/query');
+const askRouter = require('./routes/ask');
 const startWorker = require('./worker');
+const { askLimiter } = require('./middleware/rateLimiter');
 
 const app = express();
+
+app.use(helmet());
+app.use(cors({ origin: process.env.ALLOWED_ORIGIN || 'http://localhost:5173' }));
 app.use(express.json());
+
+app.use('/traces/ask', askLimiter);
+app.use('/traces/query', askLimiter);
+
 app.use('/traces', ingestRouter);
-app.get('/health', (req, res) => res.json({ status: 'ok' }));
-
-const queryRouter = require('./routes/query');
 app.use('/traces', queryRouter);
-
-const askRouter = require('./routes/ask');
 app.use('/traces', askRouter);
+
+app.get('/health', (req, res) => res.json({ status: 'ok' }));
 
 const PORT = process.env.PORT || 4000;
 
