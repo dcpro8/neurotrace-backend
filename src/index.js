@@ -22,6 +22,9 @@ app.use('/traces', ingestRouter);
 app.use('/traces', queryRouter);
 app.use('/traces', askRouter);
 
+const statsRouter = require('./routes/stats');
+app.use('/traces', statsRouter);
+
 app.get('/health', (req, res) => res.json({ status: 'ok' }));
 
 const PORT = process.env.PORT || 4000;
