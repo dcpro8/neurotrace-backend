@@ -12,6 +12,9 @@ app.get('/health', (req, res) => res.json({ status: 'ok' }));
 const queryRouter = require('./routes/query');
 app.use('/traces', queryRouter);
 
+const askRouter = require('./routes/ask');
+app.use('/traces', askRouter);
+
 const PORT = process.env.PORT || 4000;
 
 connectDB().then(() => {
