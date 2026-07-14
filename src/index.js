@@ -8,6 +8,7 @@ const queryRouter = require('./routes/query');
 const askRouter = require('./routes/ask');
 const startWorker = require('./worker');
 const statsRouter = require('./routes/stats');
+const streamRouter = require('./routes/stream');
 const tracesListRouter = require('./routes/traces');
 const { askLimiter } = require('./middleware/rateLimiter');
 
@@ -23,6 +24,8 @@ app.use('/traces/query', askLimiter);
 app.use('/traces', ingestRouter);
 app.use('/traces', queryRouter);
 app.use('/traces', askRouter);
+
+app.use('/traces', streamRouter);
 
 app.use('/traces', statsRouter);
 app.use('/traces/all', tracesListRouter);

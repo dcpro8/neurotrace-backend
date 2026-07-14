@@ -30,6 +30,16 @@ function startWorker() {
 
     await Trace.findByIdAndUpdate(trace._id, { stepCount: stepDocs.length });
 
+    const traceEvents = require('./events/traceEvents');
+
+    traceEvents.emit('new-trace', {
+      _id: trace._id,
+      agentName: trace.agentName,
+      status: trace.status,
+      startedAt: trace.startedAt,
+      stepCount: stepDocs.length
+    });
+
     const chunks = chunkSteps(stepDocs);
     for (const chunk of chunks) {
       const embedding = await generateEmbedding(chunk.text);
