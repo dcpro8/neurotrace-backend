@@ -6,4 +6,4 @@ Agent observability + RAG debugger — ask why an AI agent did what it did, in p
 - [x] Ingestion API + BullMQ queue
 - [x] Chunking + Gemini embeddings
 - [x] Vector search retrieval
-- [ ] Groq-grounded answer generation
+- [x] Groq-grounded answer generation
